@@ -5,6 +5,7 @@ This is a basic solution with ASP.NET MVC (Presentation), Web API (Business) and
 
 The application is currently working with above basic solution.
 
+Due to time constraint I could not implement below.
 TODO: (If time permits)
 1> Implement the Unit Of Work for Entity Framework
 2> Implement dependency injection for the Contact repository so the web api can be independent with CRUD operations...

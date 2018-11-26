@@ -160,6 +160,16 @@
       <DependentUpon>201811160505056_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Contacts.BusinessLayer\Contacts.BusinessLayer.csproj">
+      <Project>{4562cdc7-50e9-478e-a009-eca6286cffc1}</Project>
+      <Name>Contacts.BusinessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Contacts.DataLayer\Contacts.DataLayer.csproj">
+      <Project>{a11ea482-3798-49fd-8e73-becb2a57d31c}</Project>
+      <Name>Contacts.DataLayer</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

@@ -37,7 +37,7 @@ namespace Contacts.MVC.Controllers
              ,new SelectListItem
                    {
                        Text="Deactive",
-                       Value = "Deactive"
+                       Value = "InActive"
                     }
              };
         }

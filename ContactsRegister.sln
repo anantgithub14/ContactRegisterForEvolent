@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contacts.MVC", "Contacts.MV
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contacts.WebApi", "Contacts.WebApi\Contacts.WebApi.csproj", "{DA75F822-A105-4729-8B09-173A94AA33C0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contacts.DataLayer", "Contacts.DataLayer\Contacts.DataLayer.csproj", "{A11EA482-3798-49FD-8E73-BECB2A57D31C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contacts.BusinessLayer", "Contacts.BusinessLayer\Contacts.BusinessLayer.csproj", "{4562CDC7-50E9-478E-A009-ECA6286CFFC1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{DA75F822-A105-4729-8B09-173A94AA33C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA75F822-A105-4729-8B09-173A94AA33C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA75F822-A105-4729-8B09-173A94AA33C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A11EA482-3798-49FD-8E73-BECB2A57D31C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A11EA482-3798-49FD-8E73-BECB2A57D31C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A11EA482-3798-49FD-8E73-BECB2A57D31C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A11EA482-3798-49FD-8E73-BECB2A57D31C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4562CDC7-50E9-478E-A009-ECA6286CFFC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4562CDC7-50E9-478E-A009-ECA6286CFFC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4562CDC7-50E9-478E-A009-ECA6286CFFC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4562CDC7-50E9-478E-A009-ECA6286CFFC1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

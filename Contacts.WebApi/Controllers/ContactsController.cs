@@ -8,37 +8,71 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using Contacts.WebApi.Models;
+//using Contacts.WebApi.Models;
+using Contacts.BusinessLayer.Implementation;
+using Contacts.BusinessLayer.Interfaces;
+using Contacts.DataLayer.Entity;
 
 namespace Contacts.WebApi.Controllers
 {
     public class ContactsController : ApiController
     {
-        private DataContext db = new DataContext();
+        //private DataContext db = new DataContext();
+
+        IContactRegister objContact = new Contact();
 
         // GET: api/Contacts
-        public IQueryable<ContactRegister> GetContactDetails()
+        public IEnumerable<ContactRegister> GetContactDetails()
         {
-            return db.contactRegister;
+            IEnumerable<ContactRegister> contactDetail = new List<ContactRegister>();
+            try
+            {
+                contactDetail = objContact.ContactRegisterGet();
+            }
+            catch (ApplicationException ex)
+            {
+                throw new HttpResponseException(new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest, ReasonPhrase = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                throw new HttpResponseException(new HttpResponseMessage { StatusCode = HttpStatusCode.BadGateway, ReasonPhrase = ex.Message });
+            }
+
+            return contactDetail;
+            //return db.contactRegister;
         }
 
         // GET: api/Contacts/5
         [ResponseType(typeof(ContactRegister))]
         public IHttpActionResult GetContact(int id)
         {
-            ContactRegister contact = db.contactRegister.Find(id);
-            if (contact == null)
+            ContactRegister contactDetail = new ContactRegister();
+            try
+            {
+                contactDetail = objContact.ContactRegisterGet().Where(E => E.ContactId == id).FirstOrDefault();
+            }
+            catch (ApplicationException ex)
+            {
+                throw new HttpResponseException(new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest, ReasonPhrase = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                throw new HttpResponseException(new HttpResponseMessage { StatusCode = HttpStatusCode.BadGateway, ReasonPhrase = ex.Message });
+            }
+
+            if (contactDetail == null)
             {
                 return NotFound();
             }
 
-            return Ok(contact);
+            return Ok(contactDetail);
         }
 
         // PUT: api/Contacts/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutContact(int id, ContactRegister contact)
         {
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -49,23 +83,26 @@ namespace Contacts.WebApi.Controllers
                 return BadRequest();
             }
 
-            db.Entry(contact).State = EntityState.Modified;
 
             try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
             {
                 if (!ContactExists(id))
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+
+                var objContact = this.objContact.ContactRegisterUpdate(contact);
             }
+            catch (ApplicationException ex)
+            {
+                throw new HttpResponseException(new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest, ReasonPhrase = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                throw new HttpResponseException(new HttpResponseMessage { StatusCode = HttpStatusCode.BadGateway, ReasonPhrase = ex.Message });
+            }
+
+                      
 
             return StatusCode(HttpStatusCode.NoContent);
         }
@@ -79,8 +116,19 @@ namespace Contacts.WebApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.contactRegister.Add(contact);
-            db.SaveChanges();
+            
+            try
+            {
+                var objContact = this.objContact.ContactRegisterInsert(contact);
+            }
+            catch (ApplicationException ex)
+            {
+                throw new HttpResponseException(new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest, ReasonPhrase = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                throw new HttpResponseException(new HttpResponseMessage { StatusCode = HttpStatusCode.BadGateway, ReasonPhrase = ex.Message });
+            }
 
             return CreatedAtRoute("DefaultApi", new { id = contact.ContactId }, contact);
         }
@@ -89,30 +137,35 @@ namespace Contacts.WebApi.Controllers
         [ResponseType(typeof(ContactRegister))]
         public IHttpActionResult DeleteContact(int id)
         {
-            ContactRegister contact = db.contactRegister.Find(id);
-            if (contact == null)
+            try
             {
-                return NotFound();
+                var objContact = this.objContact.ContactRegisterDelete(id);
             }
-
-            db.contactRegister.Remove(contact);
-            db.SaveChanges();
-
-            return Ok(contact);
+            catch (ApplicationException ex)
+            {
+                throw new HttpResponseException(new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest, ReasonPhrase = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                throw new HttpResponseException(new HttpResponseMessage { StatusCode = HttpStatusCode.BadGateway, ReasonPhrase = ex.Message });
+            }
+            
+            
+            return Ok();
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        db.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
 
         private bool ContactExists(int id)
         {
-            return db.contactRegister.Count(e => e.ContactId == id) > 0;
+            return objContact.ContactRegisterGet().Count(e => e.ContactId == id) > 0;            
         }
     }
 }

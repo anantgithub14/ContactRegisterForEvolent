@@ -8,8 +8,6 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-//using Contacts.WebApi.Models;
-using Contacts.BusinessLayer.Implementation;
 using Contacts.BusinessLayer.Interfaces;
 using Contacts.DataLayer.Entity;
 
@@ -17,9 +15,12 @@ namespace Contacts.WebApi.Controllers
 {
     public class ContactsController : ApiController
     {
-        //private DataContext db = new DataContext();
+        IContactRegister _objContact;
 
-        IContactRegister objContact = new Contact();
+        public ContactsController(IContactRegister objContact)
+        {
+            this._objContact = objContact;
+        }
 
         // GET: api/Contacts
         public IEnumerable<ContactRegister> GetContactDetails()
@@ -27,7 +28,7 @@ namespace Contacts.WebApi.Controllers
             IEnumerable<ContactRegister> contactDetail = new List<ContactRegister>();
             try
             {
-                contactDetail = objContact.ContactRegisterGet();
+                contactDetail = _objContact.ContactRegisterGet();
             }
             catch (ApplicationException ex)
             {
@@ -49,7 +50,7 @@ namespace Contacts.WebApi.Controllers
             ContactRegister contactDetail = new ContactRegister();
             try
             {
-                contactDetail = objContact.ContactRegisterGet().Where(E => E.ContactId == id).FirstOrDefault();
+                contactDetail = _objContact.ContactRegisterGet().Where(E => E.ContactId == id).FirstOrDefault();
             }
             catch (ApplicationException ex)
             {
@@ -91,7 +92,7 @@ namespace Contacts.WebApi.Controllers
                     return NotFound();
                 }
 
-                var objContact = this.objContact.ContactRegisterUpdate(contact);
+                var objContact = this._objContact.ContactRegisterUpdate(contact);
             }
             catch (ApplicationException ex)
             {
@@ -119,7 +120,7 @@ namespace Contacts.WebApi.Controllers
             
             try
             {
-                var objContact = this.objContact.ContactRegisterInsert(contact);
+                var objContact = this._objContact.ContactRegisterInsert(contact);
             }
             catch (ApplicationException ex)
             {
@@ -139,7 +140,7 @@ namespace Contacts.WebApi.Controllers
         {
             try
             {
-                var objContact = this.objContact.ContactRegisterDelete(id);
+                var objContact = this._objContact.ContactRegisterDelete(id);
             }
             catch (ApplicationException ex)
             {
@@ -165,7 +166,7 @@ namespace Contacts.WebApi.Controllers
 
         private bool ContactExists(int id)
         {
-            return objContact.ContactRegisterGet().Count(e => e.ContactId == id) > 0;            
+            return _objContact.ContactRegisterGet().Count(e => e.ContactId == id) > 0;            
         }
     }
 }

@@ -1,15 +1,14 @@
 # ContactRegisterForEvolent
-Contact register application with CRUD operations using MVC, Web API and EF Code first approach
+Contact register application with CRUD operations.
 
 This is a working solution with ASP.NET MVC (Presentation), Web API (Business) and Entity Framework Code First for database operations.
 
-The application is currently working with above solution.
+Few implementations:
+-> Implemented Unit of work for entity framework operations in DataLayer
+-> Implemented contact repository in the business layer
+-> Implemented Unity IoC for dependency injection in WebApi prject
+-> Implemented Unit test project which created a fake contact repository class and tested the dependency injection
 
-Due to time constraint I could not implement below.
-TODO: (If time permits)
-1> Implement the Unit Of Work for Entity Framework  - Done
-2> Implement dependency injection for the Contact repository so the web api can be independent with CRUD operations...
-3> Global error handling using exception filters
-4> Implement Log4Net for logging
-5> Unit test project and using MOQ to mock the objects 
+-> Log4Net and global exception filters in-progress in the MVC project
+
 
